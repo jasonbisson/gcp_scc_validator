@@ -23,7 +23,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    cp backend.tf.example backend.tf
    ```
-1. Update `backend.tf` with the name of your Cloud Storage bucket.
+1. Update `backend.tf` with the GCS bucket to store Terraform state.
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
     ```
     mv terraform.example.tfvars terraform.tfvars
