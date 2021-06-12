@@ -35,7 +35,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform output gcs_bucket_tfstate` to get your Google Cloud bucket name from Terraform's state.
 
 
-## Running with Cloud Build
+## Deploying with Cloud Build
 
 1. Clone the repo.
    ```
@@ -101,10 +101,3 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-
-**Troubleshooting:**
-If you received a `PERMISSION_DENIED` error running the `gcloud access-context-manager` or the `gcloud scc notifications` commands you can append
-```
---impersonate-service-account=org-terraform@<SEED_PROJECT_ID>.iam.gserviceaccount.com
-```
-to run the command as the Terraform service account.
