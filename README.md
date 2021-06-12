@@ -17,7 +17,7 @@ installed:
 series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 
-## Deploying with Cloud Build
+## Deploying Terraform locally 
 
 1. Copy the backend:
    ```
@@ -35,20 +35,52 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform output gcs_bucket_tfstate` to get your Google Cloud bucket name from Terraform's state.
 
 
-## Running Terraform locally
+## Running with Cloud Build
 
-If you deploy using Cloud Build, the bucket information is replaced in the state
-backends as a part of the build process when the build is executed by Cloud
-Build. If you want to execute Terraform locally, you need to add your Cloud
-Storage bucket to the `backend.tf` files. You can update all of these files with
-the following steps:
-
+1. Clone the repo.
+   ```
+   gcloud source repos clone gcp-scc --project=YOUR_CLOUD_BUILD_PROJECT_ID
+   ```
+1. Navigate into the repo and change to a non-production branch.
+   ```
+   cd gcp-scc
+   git checkout -b plan
+   ```
+1. Copy contents of foundation to new repo (terraform variables will updated in a future step).
+   ```
+   cp -RT ../gcp-scc-validator .
+   ```
+1. Ensure wrapper script can be executed.
+   ```
+   chmod 755 ./tf-wrapper.sh
+   ```
 1. Run the following command:
    ```
    for i in `find -name 'backend.tf'`; do sed -i 's/UPDATE_ME/GCS_BUCKET_NAME/' $i; done
    ```
    where `GCS_BUCKET_NAME` is the name of your bucket from the steps you ran
    earlier.
+1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
+    ```
+    mv terraform.example.tfvars terraform.tfvars
+    ```
+
+1. Commit changes.
+   ```
+   git add .
+   git commit -m 'Your message'
+   ```
+1. Push your plan branch to trigger a plan. For this command, the branch `plan` is not a special one. Any branch which name is different from `development`, `non-production` or `production` will trigger a Terraform plan.
+   ```
+   git push --set-upstream origin plan
+   ```
+1. Review the plan output in your Cloud Build project. https://console.cloud.google.com/cloud-build/builds?project=YOUR_CLOUD_BUILD_PROJECT_ID
+1. Merge changes to production branch.
+   ```
+   git checkout -b development
+   git push origin development
+   ```
+1. Review the apply output in your Cloud Build project. https://console.cloud.google.com/cloud-build/builds?project=YOUR_CLOUD_BUILD_PROJECT_ID
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -68,3 +100,11 @@ the following steps:
 | gcs_bucket | The GCS bucket name that has been deployed. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+
+**Troubleshooting:**
+If you received a `PERMISSION_DENIED` error running the `gcloud access-context-manager` or the `gcloud scc notifications` commands you can append
+```
+--impersonate-service-account=org-terraform@<SEED_PROJECT_ID>.iam.gserviceaccount.com
+```
+to run the command as the Terraform service account.
