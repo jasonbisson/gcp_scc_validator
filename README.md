@@ -11,7 +11,7 @@ installed:
 
 - The [Google Cloud SDK](https://cloud.google.com/sdk/install) version 319.0.0 or later
 - [Terraform](https://www.terraform.io/downloads.html) version 0.13.6.
-- An existing project which the user has access to be used by terraform-validator.
+- An existing project and GCS Bucket to store Terraform state
 
 **Note:** Make sure that you use the same version of Terraform throughout this
 series. Otherwise, you might experience Terraform state snapshot lock errors.
@@ -23,7 +23,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    cp backend.tf.example backend.tf
    ```
-1. Update `backend.tf` with the GCS bucket to store Terraform state.
+1. Update `backend.tf` with an existing GCS bucket to store Terraform state.
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
     ```
     mv terraform.example.tfvars terraform.tfvars
