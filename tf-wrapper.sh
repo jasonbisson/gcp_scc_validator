@@ -15,7 +15,7 @@
 # limitations under the License.
 
 set -e
-
+set -x 
 action=$1
 branch=$2
 policysource=$3

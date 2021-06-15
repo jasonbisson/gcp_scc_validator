@@ -17,11 +17,8 @@ installed:
 series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 ## Deploying Terraform locally
+1. Change to directory envs and then change to the environment your working on (delevelopment,nonproduction,production)
 
-1. Copy the backend:
-   ```
-   cp backend.tf.example backend.tf
-   ```
 1. Update `backend.tf` with an existing GCS bucket to store Terraform state.
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
    ```
@@ -30,7 +27,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform init`.
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`.
-1. Run `terraform output terraform_service_account` to get the email address of the admin. You need this address in a later procedure.
 1. Run `terraform output gcs_bucket_tfstate` to get your Google Cloud bucket name from Terraform's state.
 
 ## Deploying with Cloud Build
@@ -53,18 +49,14 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
 1. Copy contents of foundation to new repo (terraform variables will updated in a future step).
    ```
-   cp -RT ../gcp-scc-validator .
+   cp -R ../gcp-scc-validator/* .
    ```
 1. Ensure wrapper script can be executed.
    ```
    chmod 755 ./tf-wrapper.sh
    ```
-1. Run the following command:
-   ```
-   for i in `find -name 'backend.tf'`; do sed -i 's/UPDATE_ME/GCS_BUCKET_NAME/' $i; done
-   ```
-   where `GCS_BUCKET_NAME` is the name of your bucket from the steps you ran
-   earlier.
+1. Change to directory envs and then change to the environment your working on (delevelopment,nonproduction,production)
+
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
 
    ```

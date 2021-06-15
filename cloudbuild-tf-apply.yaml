@@ -64,6 +64,7 @@ steps:
   args:
   - -c
   - |
+      echo "Adding bucket information to backends"
       ./tf-wrapper.sh apply ${BRANCH_NAME}
 
 artifacts:
