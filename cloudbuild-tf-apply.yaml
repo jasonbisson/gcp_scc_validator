@@ -24,7 +24,7 @@ steps:
   - |
    tf_sa_email=${_TF_SA_EMAIL}
     if [[ -n ${tf_sa_email} ]]; then
-      echo "Setting up gcloud for impersonation"
+      echo "Setting up gcloud for impersonation ${tf_sa_email}"
       gcloud config set auth/impersonate_service_account $tf_sa_email
     fi
     echo "Adding bucket information to backends"
@@ -64,7 +64,7 @@ steps:
   args:
   - -c
   - |
-      echo "Adding bucket information to backends"
+      echo "Setting up gcloud for impersonation ${tf_sa_email}"
       ./tf-wrapper.sh apply ${BRANCH_NAME}
 
 artifacts:

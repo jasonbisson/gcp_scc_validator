@@ -16,6 +16,7 @@
 
 set -e
 set -x 
+
 action=$1
 branch=$2
 policysource=$3
@@ -119,6 +120,7 @@ tf_show() {
 
 ## terraform validate for single environment.
 tf_validate() {
+exit
   local path=$1
   local tf_env=$2
   local policy_file_path=$3
