@@ -59,12 +59,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    chmod 755 ./tf-wrapper.sh
    ```
-1. Run the following command:
-   ```
-   for i in `find -name 'backend.tf'`; do sed -i 's/UPDATE_ME/GCS_BUCKET_NAME/' $i; done
-   ```
-   where `GCS_BUCKET_NAME` is the name of your bucket from the steps you ran
-   earlier.
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
 
    ```
@@ -87,6 +81,11 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    git push origin development
    ```
 1. Review the apply output in your Cloud Build project. https://console.cloud.google.com/cloud-build/builds?project=YOUR_CLOUD_BUILD_PROJECT_ID
+
+1. Destroy the new GCS bucket with gcloud build command
+   ```
+   gcloud builds submit . --config=cloudbuild-tf-destroy.yaml --project gcp-b-cicd-da5a --substitutions=BRANCH_NAME="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')",_ARTIFACT_BUCKET_NAME='Your Artifact GCS Bucket',_STATE_BUCKET_NAME='Your Terraform GCS bucket',_DEFAULT_REGION='us-central1',_GAR_REPOSITORY='gcp-tf-runners'
+   ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
