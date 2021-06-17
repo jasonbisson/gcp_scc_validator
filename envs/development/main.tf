@@ -42,6 +42,6 @@ resource "google_storage_bucket_iam_binding" "customers" {
   bucket = google_storage_bucket.batch_data.name
   role   = "roles/storage.admin"
   members = [
-    "group:${var.customer_group}","allUsers"
+    "group:${var.customer_group}"
   ]
 }

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-project_id = ""
+project_id     = ""
 customer_group = ""
 default_region = ""
