@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,15 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+set -x
 set -e
-set -x 
 
 action=$1
 branch=$2
-policysource=$3
-project_id=$4
-policy_type=$5 # FILESYSTEM or CLOUDSOURCE
+policyrepo=$3
 base_dir=$(pwd)
 tmp_plan="${base_dir}/tmp_plan" #if you change this, update build triggers
 environments_regex="^(development|non-production|production|shared)$"
@@ -37,6 +34,22 @@ tf_apply() {
   if [ -d "$path" ]; then
     cd "$path" || exit
     terraform apply -input=false -auto-approve "${tmp_plan}/${tf_component}-${tf_env}.tfplan" || exit 1
+    cd "$base_dir" || exit
+  else
+    echo "ERROR:  ${path} does not exist"
+  fi
+}
+
+tf_destroy() {
+  local path=$1
+  local tf_env=$2
+  local tf_component=$3
+  echo "*************** TERRAFORM DESTROY *******************"
+  echo "      At environment: ${tf_component}/${tf_env} "
+  echo "***************************************************"
+  if [ -d "$path" ]; then
+    cd "$path" || exit
+    terraform destroy -input=false -auto-approve || exit 1
     cd "$base_dir" || exit
   else
     echo "ERROR:  ${path} does not exist"
@@ -93,7 +106,7 @@ tf_plan_validate_all() {
       if [[ "$env" =~ $environments_regex ]] ; then
         tf_init "$env_path" "$env" "$component"
         tf_plan "$env_path" "$env" "$component"
-        tf_validate "$env_path" "$env" "$policysource" "$component"
+        tf_validate "$env_path" "$env" "$policyrepo" "$component"
       else
         echo "$component/$env doesn't match $environments_regex; skipping"
       fi
@@ -120,7 +133,6 @@ tf_show() {
 
 ## terraform validate for single environment.
 tf_validate() {
-exit
   local path=$1
   local tf_env=$2
   local policy_file_path=$3
@@ -133,19 +145,13 @@ exit
     echo "terraform-validator not found!  Check path or visit"
     echo "https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator"
   elif [ -z "$policy_file_path" ]; then
-    echo "no policy repo found! Check the argument provided for policysource to this script."
+    echo "no policy repo found! Check the argument provided for policyrepo to this script."
     echo "https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator"
   else
     if [ -d "$path" ]; then
       cd "$path" || exit
       terraform show -json "${tmp_plan}/${tf_component}-${tf_env}.tfplan" > "${tf_env}.json" || exit 32
-      if [[ "$policy_type" == "CLOUDSOURCE" ]]; then
-        # Check if $policy_file_path is empty so we clone the policies repo only once
-        if [ -z "$(ls -A "${policy_file_path}" 2> /dev/null)" ]; then
-          gcloud source repos clone gcp-policies "${policy_file_path}" --project="${project_id}" || exit 34
-        fi
-      fi
-      terraform-validator validate "${tf_env}.json" --policy-path="${policy_file_path}" --project="${project_id}" || exit 33
+      terraform-validator validate "${tf_env}.json" --policy-path="${policy_file_path}" || exit 33
       cd "$base_dir" || exit
     else
       echo "ERROR:  ${path} does not exist"
@@ -171,6 +177,10 @@ single_action_runner() {
             tf_apply "$env_path" "$env" "$component"
             ;;
 
+          destroy )
+            tf_destroy "$env_path" "$env" "$component"
+            ;;
+
           init )
             tf_init "$env_path" "$env" "$component"
             ;;
@@ -184,7 +194,7 @@ single_action_runner() {
             ;;
 
           validate )
-            tf_validate "$env_path" "$env" "$policysource" "$component"
+            tf_validate "$env_path" "$env" "$policyrepo" "$component"
             ;;
           * )
             echo "unknown option: ${action}"
@@ -198,7 +208,7 @@ single_action_runner() {
 }
 
 case "$action" in
-  init|plan|apply|show|validate )
+  init|plan|apply|destroy|show|validate )
     single_action_runner
     ;;
 
