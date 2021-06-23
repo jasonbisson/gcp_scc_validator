@@ -18,30 +18,33 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 ## Deploying Terraform locally
 
-1. Copy the backend:
+1. Change to deployment directory
    ```
-   cp backend.tf.example backend.tf
+   cd /envs/development
    ```
 1. Update `backend.tf` with an existing GCS bucket to store Terraform state.
+   ```
+   bucket = "UPDATE_ME"
+   ```
 1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
    ```
    mv terraform.example.tfvars terraform.tfvars
    ```
-1. Run `terraform init`.
+1. Run `terraform init`
 1. Run `terraform plan` and review the output.
-1. Run `terraform apply`.
-1. Run `terraform output terraform_service_account` to get the email address of the admin. You need this address in a later procedure.
-1. Run `terraform output gcs_bucket_tfstate` to get your Google Cloud bucket name from Terraform's state.
+1. Run `terraform apply`
 
 ## Deploying with Cloud Build
 
 1. Deploy Bootstrap environment from [Cloud Foundation Toolkit](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
-1. Append the cloud_source_repos variable to include gcp-scc and run terraform apply
+1. Add cloud_source_repos to terraform.tfvars file in 0-bootstrap
 
    ```
-   default     = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects","gcp-scc"]
+   cloud_source_repos = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects", "gcp-scc"]
    ```
+1. Run `terraform apply`
+
 1. Clone the empty gcp-scc repo.
    ```
    gcloud source repos clone gcp-scc --project=YOUR_CLOUD_BUILD_PROJECT_ID
