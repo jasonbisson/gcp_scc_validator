@@ -45,7 +45,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`
 
-## Cloud Build Deploy
+### Cloud Build Deploy
 
 1. Deploy Bootstrap environment from [Cloud Foundation Toolkit](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
