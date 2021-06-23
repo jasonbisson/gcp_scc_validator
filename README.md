@@ -37,28 +37,30 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    customer_group = ""
    ```
 
-## Deploy locally or with Cloud Build
+## Deploy Insecure Infrastructure
 
-### Local Deploy
+### Deploy from desktop
 
 1. Run `terraform init`
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`
 
-### Cloud Build Deploy
+### Deploy a Cloud Build environment
 
 1. Deploy Bootstrap environment from [Cloud Foundation Toolkit](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
-1. Add cloud_source_repos to terraform.tfvars file in 0-bootstrap
+1. Add cloud_source_repos to terraform.tfvars file to build gcp-scc repo in 0-bootstrap
 
    ```
    cloud_source_repos = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects", "gcp-scc"]
    ```
 1. Run `terraform apply`
 
+#### Deploy from Cloud Build pipeline
+
 1. Clone the empty gcp-scc repo.
    ```
-   gcloud source repos clone gcp-scc --project=YOUR_CLOUD_BUILD_PROJECT_ID
+   gcloud source repos clone gcp-scc --project=YOUR_CLOUD_BUILD_PROJECT_ID_FROM_0-bootstrap
    ```
 1. Navigate into the repo and change to a non-production branch.
    ```
