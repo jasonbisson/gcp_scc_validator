@@ -16,7 +16,7 @@ installed:
 **Note:** Make sure that you use the same version of Terraform throughout this
 series. Otherwise, you might experience Terraform state snapshot lock errors.
 
-## Deploying Terraform locally
+## Update variables
 
 1. Change to deployment directory
    ```
@@ -30,11 +30,22 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    mv terraform.example.tfvars terraform.tfvars
    ```
+1. Update 3 required  variables
+   ```
+   project_id     = ""
+   bucket_name_prefix = ""
+   customer_group = ""
+   ```
+
+## Deploy locally or with Cloud Build
+
+### Local Deploy
+
 1. Run `terraform init`
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`
 
-## Deploying with Cloud Build
+## Cloud Build Deploy
 
 1. Deploy Bootstrap environment from [Cloud Foundation Toolkit](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
@@ -62,12 +73,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    chmod 755 ./tf-wrapper.sh
    ```
-1. Rename `terraform.example.tfvars` to `terraform.tfvars` and update the file with values from your environment:
-
-   ```
-   mv terraform.example.tfvars terraform.tfvars
-   ```
-
 1. Commit changes.
    ```
    git add .

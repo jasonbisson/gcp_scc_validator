@@ -15,5 +15,7 @@
  */
 
 project_id     = ""
+bucket_name_prefix = ""
 customer_group = ""
-default_region = ""
+#default_region = ""
+#storage_bucket_labels = = {}
