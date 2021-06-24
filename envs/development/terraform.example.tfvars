@@ -17,5 +17,6 @@
 project_id     = ""
 bucket_name_prefix = ""
 customer_group = ""
+terraform_service_account = ""
 #default_region = ""
 #storage_bucket_labels = = {}

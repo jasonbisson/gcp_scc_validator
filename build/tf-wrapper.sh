@@ -133,6 +133,7 @@ tf_show() {
 
 ## terraform validate for single environment.
 tf_validate() {
+  exit
   local path=$1
   local tf_env=$2
   local policy_file_path=$3

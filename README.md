@@ -20,7 +20,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 1. Change to deployment directory
    ```
-   cd /envs/development
+   cd envs/development
    ```
 1. Update `backend.tf` with an existing GCS bucket to store Terraform state.
    ```
@@ -30,22 +30,23 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    mv terraform.example.tfvars terraform.tfvars
    ```
-1. Update 3 required  variables
+1. Update 4 required  variables
    ```
    project_id     = ""
    bucket_name_prefix = ""
    customer_group = ""
+   terraform_service_account = ""
    ```
 
 ## Deploy Insecure Infrastructure
 
-### Deploy from desktop
+### Deploy from a desktop
 
 1. Run `terraform init`
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`
 
-### Deploy a Cloud Build environment
+### Optional Deploy a Cloud Build environment
 
 1. Deploy Bootstrap environment from [Cloud Foundation Toolkit](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
@@ -106,6 +107,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 | --------------------- | ------------------------------------------------------------------- | ------------- | --------------- | :------: |
 | project_id            | The project id where the GCS bucket will be deployed.               | `string`      | n/a             |   yes    |
 | bucket_name_prefix    | Prefex of GCS bucket that will be deployed.                         | `string`      | n/a             |   yes    |
+| terraform_service_account    | Service account running the terraform deployment                         | `string`      | n/a             |   yes    |
 | customer_group        | Name of Google Group that will permission to manage the GCS bucket. | `string`      | n/a             |   yes    |
 | default_region        | Default region to create resources where applicable.                | `string`      | `"us-central1"` |    no    |
 | storage_bucket_labels | Labels for Storage bucket                                           | `map(string)` | n/a             |    no    |
