@@ -67,9 +67,13 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    cd gcp-scc
    git checkout -b plan
    ```
-1. Copy contents of foundation to new repo (terraform variables will updated in a future step).
+1. Copy the development environment terraform templates to the empty gcp-scc repo.
    ```
-   cp -RT ../gcp-scc-validator .
+   cp -R ../gcp-scc-validator/env/development/ .
+   ```
+1. Copy the Cloud Build configuration files and Terraform wrapper script
+   ```
+   cp -R ../gcp-scc-validator/build/ .
    ```
 1. Ensure wrapper script can be executed.
    ```
