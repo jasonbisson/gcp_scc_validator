@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The purpose of this repository is to demonstrate how our secure validator script can first detect an insecure infrastructure deployment in a development environment and then block the deployment in a production environment.
+This repository aims to help evaluate secure command center by detecting an insecure infrastructure deployment in a development environment.
 
 ## Prerequisites
 
