@@ -12,7 +12,7 @@
 
 terraform {
   backend "gcs" {
-    bucket = "UPDATE_ME"
-    prefix = "terraform/scc-evaluation/development"
+    bucket = "bkt-b-tfstate-c6bf"
+    prefix = "terraform/scc-validator/development"
   }
 }

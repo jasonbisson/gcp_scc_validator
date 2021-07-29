@@ -10,12 +10,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-/******************************************
-  GCS Terraform State Bucket
-*******************************************/
-
-output "gcs_bucket" {
-  description = "Bucket used for storing batch data."
-  value       = google_storage_bucket.batch_data.name
+terraform {
+  backend "gcs" {
+    bucket = "UPDATE_ME"
+    prefix = "terraform/scc-validator/development"
+  }
 }
