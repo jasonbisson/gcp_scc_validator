@@ -1,4 +1,4 @@
-# Secure Command Center Evaluation
+# Secure Command Center Validator
 
 ## Purpose
 
