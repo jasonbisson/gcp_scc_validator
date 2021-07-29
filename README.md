@@ -30,14 +30,8 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    mv terraform.example.tfvars terraform.tfvars
    ```
-1. Update 4 required  variables
-   ```
-   project_id     = ""
-   bucket_name_prefix = ""
-   customer_group = ""
-   terraform_service_account = ""
-   ```
-
+1. Update required variables
+   
 ## Deploy Insecure Infrastructure
 
 ### Deploy from a desktop

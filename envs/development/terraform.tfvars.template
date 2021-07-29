@@ -1,0 +1,7 @@
+project_id                = ""
+org_id                    = ""
+environment               = "scc_helper_updated"
+terraform_service_account = ""
+identity_running_function = ""
+customer_group            = ""
+user_email                = ""
