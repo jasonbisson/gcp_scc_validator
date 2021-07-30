@@ -64,8 +64,8 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
 1. Copy the development environment directory and cloud build configuration files
    ```
-   cp -r ../gcp-scc-validator/envs  .
-   cp ../gcp-scc-validator/build/*  . 
+   cp -r ../gcp_scc_validator/envs  .
+   cp ../gcp_scc_validator/build/*  . 
    ```
 1. Ensure wrapper script can be executed.
    ```
@@ -93,23 +93,17 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    gcloud builds submit . --config=cloudbuild-tf-destroy.yaml --project your_build_project_id --substitutions=BRANCH_NAME="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')",_ARTIFACT_BUCKET_NAME='Your Artifact GCS Bucket',_STATE_BUCKET_NAME='Your Terraform GCS bucket',_DEFAULT_REGION='us-central1',_GAR_REPOSITORY='prj-tf-runners'
    ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Inputs
 
 | Name                  | Description                                                         | Type          | Default         | Required |
 | --------------------- | ------------------------------------------------------------------- | ------------- | --------------- | :------: |
-| project_id            | The project id where the GCS bucket will be deployed.               | `string`      | n/a             |   yes    |
-| bucket_name_prefix    | Prefex of GCS bucket that will be deployed.                         | `string`      | n/a             |   yes    |
+| project_id            | The project id where the resources will be deployed.               | `string`      | n/a             |   yes    |
+| org_id            | The org id where Security Command Center is deployed.               | `string`      | n/a             |   yes    |
+| environment    | Environment tag to link the resources.                         | `string`      | n/a             |   yes    |
 | terraform_service_account    | Service account running the terraform deployment                         | `string`      | n/a             |   yes    |
+| identity_running_function   | Name of identity with permission to run Cloud Function                         | `string`      | n/a             |   yes    |
 | customer_group        | Name of Google Group that will permission to manage the GCS bucket. | `string`      | n/a             |   yes    |
+| user_email        | Name of email identity that will have permission to the project. | `string`      | n/a             |   yes    |
 | default_region        | Default region to create resources where applicable.                | `string`      | `"us-central1"` |    no    |
 | storage_bucket_labels | Labels for Storage bucket                                           | `map(string)` | n/a             |    no    |
 
-## Outputs
-
-| Name       | Description                                 |
-| ---------- | ------------------------------------------- |
-| gcs_bucket | The GCS bucket name that has been deployed. |
-
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
