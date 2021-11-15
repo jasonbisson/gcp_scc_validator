@@ -57,6 +57,8 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 | region        | Default region to create resources where applicable.                | `string`      | `"us-central1"` |    no    |
 
 
+# Appendix 
+
 ## Advanced deployment using Cloud Build
 
 1. Deploy Bootstrap environment from [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
