@@ -45,7 +45,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform destroy`
 
 
-### Optional advanced deployment with Cloud Build
+## Optional advanced deployment with Cloud Build
 
 1. Deploy Bootstrap environment from [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
@@ -56,7 +56,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
 1. Run `terraform apply`
 
-#### Deploy from Cloud Build 
+### Deploy from Cloud Build 
 
 1. Clone the empty gcp-scc repo.
    ```
@@ -94,7 +94,7 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Review the apply output in your Cloud Build project. https://console.cloud.google.com/cloud-build/builds?project=YOUR_CLOUD_BUILD_PROJECT_ID
 
 
-### Optional Ddestroy from Cloud Build
+### Destroy from Cloud Build
    ```
    gcloud builds submit . --config=cloudbuild-tf-destroy.yaml --project your_build_project_id --substitutions=BRANCH_NAME="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')",_ARTIFACT_BUCKET_NAME='Your Artifact GCS Bucket',_STATE_BUCKET_NAME='Your Terraform GCS bucket',_DEFAULT_REGION='us-central1',_GAR_REPOSITORY='prj-tf-runners'
    ```
