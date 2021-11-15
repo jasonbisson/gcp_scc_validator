@@ -40,6 +40,11 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform plan` and review the output.
 1. Run `terraform apply`
 
+### Destroy from Desktop
+
+1. Run `terraform destroy`
+
+
 ### Optional advanced deployment with Cloud Build
 
 1. Deploy Bootstrap environment from [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
@@ -88,11 +93,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
 1. Review the apply output in your Cloud Build project. https://console.cloud.google.com/cloud-build/builds?project=YOUR_CLOUD_BUILD_PROJECT_ID
 
-## Destroy Secure Command Center validator deployment
-
-### Destroy from Desktop
-
-1. Run `terraform destroy`
 
 ### Optional Ddestroy from Cloud Build
    ```
