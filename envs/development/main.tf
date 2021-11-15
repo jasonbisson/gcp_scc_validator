@@ -1,10 +1,3 @@
-module "cloud_iam" {
-  source                    = "./modules/cloud_iam"
-  project_id                = var.project_id
-  terraform_service_account = var.terraform_service_account
-  customer_group            = var.customer_group
-  user_email                = var.user_email
-}
 
 module "cloud_function" {
   source                    = "./modules/cloud_function"

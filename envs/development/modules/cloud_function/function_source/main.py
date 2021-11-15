@@ -35,6 +35,16 @@ def scc_helper_updated(request):
         print("Using zero as critical max value")
         critical_max = 0
    
+    if request_json and "scoped_project" in request_json:
+        project_id = request_json["scoped_project"]
+
+    elif request_args and "scoped_project" in request_args:
+        project_id = request_args["scoped_project"]
+
+    else:
+        print("Using Cloud Function Project ID as scoped_project")
+        credentials, project_id = google.auth.default()
+
     if request_json and "high_max" in request_json:
         high_max = int(float(request_json["high_max"]))
 
@@ -67,7 +77,7 @@ def scc_helper_updated(request):
     logger = logging_client.logger(logger_name)
 
 
-    credentials, project_id = google.auth.default()
+    # credentials, project_id = google.auth.default()
 
     project_name = "projects/{project_id}".format(project_id=project_id)
 

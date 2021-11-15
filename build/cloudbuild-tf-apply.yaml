@@ -15,7 +15,7 @@
 timeout: 3600s
 substitutions:
   _POLICY_REPO: '/workspace/policy-library' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
-  _LOGGER_NAME: scc_logging # default value
+  _LOGGER_NAME: "scc_helper_log${BUILD_ID}" # default value
   _CRITICAL: "1" # default value
   _HIGH: "50" # default value
   _MEDIUM: "50" # default value
