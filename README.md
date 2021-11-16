@@ -70,7 +70,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
    ```
    cloud_source_repos = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects", "gcp-scc"]
    ```
-1. Run `terraform apply`
 
 ### Deploy from Cloud Build 
 
