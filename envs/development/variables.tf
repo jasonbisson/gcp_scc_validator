@@ -11,16 +11,6 @@ variable "identity_running_function" {
   type        = string
 }
 
-variable "customer_group" {
-  description = "Google Group for customers"
-  type        = string
-}
-
-variable "user_email" {
-  type        = string
-  description = "Email for group to receive roles (Ex. user@example.com)"
-}
-
 variable "environment" {
   description = "Unique environment name to link the whole deployment"
   type        = string

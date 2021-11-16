@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository aims to deploy a cloud function to help detect an insecure infrastructure deployment .
+This repository aims to deploy a cloud function to help detect an insecure infrastructure deployment.
 
 ## Prerequisites
 

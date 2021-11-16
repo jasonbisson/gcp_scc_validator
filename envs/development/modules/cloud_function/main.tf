@@ -58,8 +58,7 @@ resource "google_cloudfunctions_function" "function" {
   region           = var.region
   name             = var.environment
   entry_point      = var.environment
-  ingress_settings = "ALLOW_ALL"
-  #ingress_settings = "ALLOW_INTERNAL_AND_GCLB"
+  ingress_settings = "ALLOW_INTERNAL_ONLY"
   trigger_http          = true
   runtime               = var.runtime
   service_account_email = google_service_account.main.email
