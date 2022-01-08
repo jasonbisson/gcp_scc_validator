@@ -45,18 +45,6 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 1. Run `terraform destroy`
 
 
-## Inputs
-
-| Name                  | Description                                                         | Type          | Default         | Required |
-| --------------------- | ------------------------------------------------------------------- | ------------- | --------------- | :------: |
-| project_id            | The project id where the resources will be deployed.               | `string`      | n/a             |   yes    |
-| org_id            | The org id where Security Command Center is deployed.               | `string`      | n/a             |   yes    |
-| environment    | Environment tag to link the resources.                         | `string`      | n/a             |   yes    |
-| terraform_service_account    | Service account running the terraform deployment                         | `string`      | n/a             |   no    |
-| identity_running_function   | Name of identity with permission to run Cloud Function                         | `string`      | n/a             |   yes    |
-| region        | Default region to create resources where applicable.                | `string`      | `"us-central1"` |    no    |
-
-
 # Appendix 
 
 ## Advanced deployment using Cloud Build
@@ -65,21 +53,21 @@ series. Otherwise, you might experience Terraform state snapshot lock errors.
 
 1. Deploy Bootstrap environment from [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
 
-1. Add cloud_source_repos to terraform.tfvars file to build gcp-scc repo in 0-bootstrap
+1. Add cloud_source_repos to terraform.tfvars file to build gcp-scc-validator repo in 0-bootstrap
 
    ```
-   cloud_source_repos = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects", "gcp-scc"]
+   cloud_source_repos = ["gcp-org", "gcp-environments", "gcp-networks", "gcp-projects", "gcp-scc-validator"]
    ```
 
 ### Deploy from Cloud Build 
 
-1. Clone the empty gcp-scc repo.
+1. Clone the empty gcp-scc-validator repo.
    ```
-   gcloud source repos clone gcp-scc --project=YOUR_CLOUD_BUILD_PROJECT_ID_FROM_0-bootstrap
+   gcloud source repos clone gcp-scc-validator --project=YOUR_CLOUD_BUILD_PROJECT_ID_FROM_0-bootstrap
    ```
 1. Navigate into the repo and change to a non-production branch.
    ```
-   cd gcp-scc
+   cd gcp-scc-validator
    git checkout -b plan
    ```
 1. Copy the development environment directory and cloud build configuration files
