@@ -50,7 +50,7 @@ resource "google_cloudfunctions_function_iam_member" "invoker" {
   cloud_function = google_cloudfunctions_function.function.name
 
   role   = "roles/cloudfunctions.invoker"
-  member = "user:${var.identity_running_function}"
+  member = "serviceAccount:${var.identity_running_function}"
 }
 
 resource "google_cloudfunctions_function" "function" {
